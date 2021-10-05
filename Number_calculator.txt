@@ -1,0 +1,211 @@
+#!/bin/bash
+
+#####################################################
+#Student Name: Simranjeet Singh
+#Student Number: 040998511
+#Assignment no: 09
+#Course: Operating System Fund..(Linux).
+#Lab Section: 304
+#Lab Due Date & Time: 05-07-2021 11:59pm
+#####################################################
+
+#Script Name: mycalct.sh
+
+# This scripts lets the user to enter the some numbers and on that numbers it will perform some of the 
+# calculations like substraction and addition. the script willl give an error if the wrong number 
+# of parameters will be provided. If user provide three parameter the second one should be +\- to 
+# perform the calculations. if no parameter is given it will allow user to either do
+# calculation to exit it.
+
+#function add will do the addition of two numbers.
+function add()
+{
+	# here local means local variable of the function and will be inscope of only this function.
+	   local num1=$1
+  	   local num2=$2
+
+	   #adding two numbers and saving it in variable total.
+  	   add=$((num1+num2))
+  	   # printing the addition of two numbers using echo.
+   	   echo "The sum of $num1 plus (+) $num2 equals $add"
+}
+
+
+#function sub will subtract two numbers.
+function sub()
+{
+  	   local numb1=$1
+  	   local numb2=$2
+
+  	   sub=$((numb1-numb2))
+	   # printing Substraction of two numbers.
+  	   echo "The Substraction of $numb1 minus (-) $numb2 equals $sub"
+}
+
+# The function menuFirst will check user input is valid or not and run until user input is match
+# with menu. using for loop it will display the Menu1 of the script. then it used the if statement 
+# to further verify the choice. 
+
+function menuFirst()
+{
+	  flag=true
+	  while $flag
+	  do
+		# printing the menu  
+  	 	echo "Menu 1"
+  	  	echo "Please Make a choice"
+  	  	echo "C) Calculation"
+   	  	echo "X) Exit "
+  	  	read choice  #global varible means can be access from anywhere within the scipt.
+
+   	    if [[ "$choice" == "C" ]] || [[ "$choice" == "c" ]] || [[ "$choice" == "X" ]] || [[ "$choice" == "x" ]];
+      	  	then
+   			flag=false #flag to break this if statement.
+		#end if statement	
+ 	 	fi
+	  # end the while loop of the function	
+ 	  done
+	  # clearing the window
+ 	  clear
+}
+
+
+#The function menuSec will check the user input is valid or not and run until user input is matched with menu
+function menuSec()
+{
+ 	  echo "Please enter an integer number or X to exit"
+ 	  read value #global varible value
+	  #clearing the input stream
+  	  clear
+}
+
+
+#function will check user input is valid or not and run until user input is match with menu.
+function menuThree()
+{
+ 	  flag=true
+ 	  while $flag
+  	  do
+		  # printing the menu
+    		echo "+) ADD"
+    		echo "-) SUBTRACT"
+    		echo "X) EXIT"
+    		read operand  #global variable operand.
+
+                # using the if statement to verify the operand to add or sub numbers or word X to Exit
+	if [[ "$operand" == "+" ]] || [[ "$operand" == "-" ]] || [[ "$operand" == "X" ]] || [[ "$operand" == "x" ]];
+		then
+    			flag=false #flag to break while loop if input is correct and stop the script
+   		fi
+  	 done
+	 #clearing the screen
+ 	 clear 
+}
+
+
+# mode 1: If user run script with 3 parameter then it will return the result and then exit suddenly after showing result.
+if [[ $# == 3 ]];
+then
+	para1=$1 # first number 
+        para2=$2 # operand
+        para3=$3 # second number
+
+	# using if else inner statements to verify the entered values
+	# if operand is + then it will print out the sum of the two entered numbers
+	if [[ "$para2" == "+" ]];
+	then
+		#calling add function to add numbers
+        	add $para1 $para3
+
+	# if operand is - then substraction will print out
+        elif [[ "$para2" == "-" ]];
+	then
+		# calling the subtract function to sub two numbers.
+        	sub $para1 $para3
+        else
+	# if operand is otherthan +/- then this message will be prompted on the screen.
+	echo "Wrong input entered for Operation need any one of this (+ or -)"
+
+	#end if else.
+	fi
+
+#mode :2, if no arguments will be  passed.
+elif [[ $# == 0 ]];
+then
+	point=true
+# here point varible is used to control while loop if user enter x then script will exit otherwise it will# keep running.
+	while $point 
+
+# menu will printed by calling menuFirst then uses the if statement on it to verify the choice and perform# the calcutions further
+do		
+    	menuFirst
+    	if [[ "$choice" == "C" ]] || [[ "$choice" == "c" ]];
+	then
+
+        # menu second will printout which will prompt to input number 1.
+         menuSec
+	#storing the value in variable1 entered by the user for number 1.
+         varible1=$value
+
+         if [[ "$value" == "X" ]] || [[ "$value" == "x" ]];
+	then
+        
+	# if the user press either x r X it will give true to break the loop and process further.
+        point=false
+        break
+        fi
+
+
+  	# menu 3 will print out
+ 	 menuThree
+	 # if the user press the x then it will exit the window otherwise it continue to print menuthree
+	      if [[ "$operand" == "X" ]] || [[ "$operand" == "x" ]];
+		then
+        	point=false
+         				
+		  break
+         	    fi
+				
+        # menu 2 will printout to take 2 varible input
+          menuSec
+	   varible2=$value
+	   if [[ "$value" == "X" ]] || [[ "$value" == "x" ]];
+		then
+         	 point=false
+         	 
+		 break
+         	 fi
+
+
+         # if operand is + then sum will printout
+       	 if [[ "$operand" == "+" ]];
+		then
+                       result=$((varible1+varible2))
+                       echo "The sum of $varible1 + $varible2 = $result"
+
+          # if operand is - then sub printout
+          elif [[ "$operand" == "-" ]];
+	        then
+                        result=$((varible1-varible2))
+                        echo "The substraction of $varible1 - $varible2 = $result"
+                		 
+	  else
+                point=false
+                break
+                fi
+
+
+      elif [ "$choice" == "X" ] || [ "$choice" == "x" ]; 
+			then
+      				point=false
+      				break
+			fi
+#3 second hold result after that menu 1 printout
+sleep 3
+clear
+	done
+
+ # if parameter is not equal to 3 or 0 then this msg will printout 
+else 
+	echo "Script run only for 3 or 0 Aarguments"
+fi

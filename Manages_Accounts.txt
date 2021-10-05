@@ -1,0 +1,113 @@
+#!/bin/bash
+
+#####################################################
+#Student Name: Simranjeet Singh
+#Student Number: 040998511
+#Assignent no: 08
+#Course: Operating System Fund..(Linux).
+#Lab Section: 304
+#Lab Due Date & Time: 29-07-2021 11:59pm
+#####################################################
+
+#Script Name: myscript.sh
+
+# This script manages the users and the groups by using some commands. It allows to create, 
+#delete the user account. It also allows the user to change the initial group for the user account.
+#In adddition, it can also change the default login shell as well as teh account expiration date.
+#It has an option to quit the current script.
+
+choice=n
+
+
+##started while loop
+while [ $choice != "Q" ] && [ $choice != "q" ]
+       do
+        ## printing menu
+        clear
+ echo "Choose one of the below options:"
+        echo "A) to Create a user account"
+        echo "B) to Delete a user account"
+        echo "C) to Change supplementary group for a user account"
+        echo "D) to Change initial group for a user account"
+        echo "E) to Change default login shell for a user account"
+        echo "F) to Change account expiration date for a user account"
+        echo "Q) to Quit"
+
+        ## reading user choice and used p to prompt the text 
+        read -p "What would you like to do?: " choice
+
+        ## evaluating user choice and executing tasks based on it.
+        # here if the choice is A/a then user will be prompted with some text and user has to enter the input like shell, name, dir.
+        if [[ $choice == "A" ]] || [[ $choice == "a" ]]
+        then
+                read -p "Enter the username you wish to add: " username;
+        read -p "Enter the new user's home directory(Absolute Path): " dir;
+        read -p "Enter the default login shell for new user(Absolute Path): " shell;
+
+        # using useradd command by bypassing all the securities(that is sudo) the user will be added to the system.
+        # here -d for the directory, -m to create user home directory and -s is used to add the shell to user account. 
+        sudo useradd -d $dir -m -s $shell $username
+  # if the choice  equals to B/b it will delete the user by taking the user name of that user
+        elif [[ $choice == "B" ]] || [[ $choice == "b" ]]
+        then
+        read -p "Enter the username you want to delete: " user;
+
+        # using userdel user and user's directory will be removed from the system by taking its username. here -r used to remove a         ll the files in the homedir will be removed along with its homedir.
+        sudo userdel -r $user
+
+
+        # if user choose C/c then  it will prompt for the uername and group name which will be added as the supplementary group fo         r enter user account.
+        elif [[ $choice == "C" ]] || [[ $choice == "c" ]]
+        then
+        read -p "Enter the name of supplementary group: " sgroup;
+        read -p "Enter the username: " user;
+
+        # using usermod command to do the modification of the user account. Here -G is used to add the supplymentary group in the          entered user.
+        sudo usermod -G $sgroup $user;
+
+
+        # if user enter D/d then user's initial group will be added to the system.
+        elif [[ $choice == "D" ]] || [[ $choice == "d" ]]
+        then
+        read -p "Enter the name of initial group: " igroup
+        read -p "Enter the username: " user
+
+        #using usermod command to change the initial group of the user. here -g denotes to change the primary group 
+        sudo usermod -g $igroup $user;
+
+
+        # if user enter E/e. then user can add or change shell to the account
+        elif [[ $choice == "E" ]] || [[ $choice == "e" ]]
+        then
+        read -p "Enter the default login shell: " shell;
+        read -p "Enter the username: " user
+
+        # here -s denotes the specified shell to user account.
+        sudo usermod -s $shell $user;
+
+        # if user enter F/f.will be promted to enter the exerication date
+        elif [[ $choice == "F" ]] ||[[  $choice == "f" ]]
+        then
+        read -p "Enter the new account expiration date: YYYY-MM-DD: " exp
+        read -p "ENter the username: " user
+
+        # -e used to set the expiry to user's account.
+        sudo usermod -e $exp $user;
+
+
+        ## end if block
+        fi
+
+
+        ## sleep for 3 seconds after the statements ends
+        sleep 3
+
+
+        ## clears the screen
+        clear
+
+## end while loop
+done
+
+
+

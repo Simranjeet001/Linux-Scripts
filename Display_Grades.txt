@@ -1,0 +1,87 @@
+#!/bin/bash
+
+#####################################################
+#Student Name: Simranjeet Singh
+#Student Numeber: 040998511
+#Course: Operating System Fund..(Linux).
+#Course Lab Section: 314
+#Lab Due Date & Time: 22-07-2021 11:59pm
+#####################################################
+
+#Script Name: mygrade.sh
+
+#This script let the user to enter the marks for tests, assignment and final as numbers.Then,it will save it in a variable       
+#called total. After that the script undergoes some if elseif statements and check under which grade the marks fall in and at the 
+#end it prints(displays) the total marks with the its falling grade.
+
+
+#Letting the users to enter the marks using #read#. p is a prompt used to display the prompt
+#Prompt user to enter the marks for the assignment, test1,2 and the final score.
+read -p "Enter Assignment mark (0 - 40):" assignment
+read -p "Enter Test 1 mark (0 - 15):" test1
+read -p "Enter Test 2 mark (0 - 15):" test2
+read -p "Enter Final exam mark (0 - 30):" final
+
+#Saving the total of all the above marks in variable called total.
+total=$(($assignment+$test1+$test2+$final))
+
+#if elseif statements used to verify under which grade does the total of marks falls then 
+#assigning that grade to the Variable finalGrade. 
+if [[ $total -ge 90 ]]
+    then
+             finalGrade="A+"
+
+elif [[ $total -ge 85 ]]
+    then
+             finalGrade="A"
+
+elif [[ $total -ge 80 ]]
+    then
+             finalGrade="A-"
+
+elif [[ $total -ge 77 ]]
+    then
+             finalGrade="B+"
+
+elif [[ $total -ge 73 ]]
+    then
+             finalGrade="B"
+elif [[ $total -ge 70 ]]
+    then
+            finalGrade="B-"
+elif [[ $total -ge 67 ]]
+    then
+             finalGrade="C+"
+elif [[ $total -ge 63 ]]
+    then
+             finalGrade="C"
+elif [[ $total -ge 60 ]]
+    then
+             finalGrade="c-"
+elif [[ $total -ge 57 ]]
+    then
+             finalGrade="D+"
+elif [[ $total -ge 53 ]]
+    then
+             finalGrade="D"
+elif [[ $total -ge 50 ]]
+    then
+             finalGrade="D-"
+elif [[ $total -le 49 ]]
+    then
+             finalGrade="F"
+
+#as the if else statements should be end with fi. The fi statement is a basic fundamental
+#control statement that allows Shell to make conditional choices and run(execute) statements.
+fi
+
+#emply line space
+echo
+
+#Using echo we will print the total of marks and the Grade for that total on the screen
+#with some text that we want to displayed(which is in inverted commas).
+echo "Your final numeric grade is "$total", and your final"
+echo "letter grade is" $finalGrade
+
+#.......................<<END>>.........................<<SCRIPT>>........................      
+
